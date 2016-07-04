@@ -9,6 +9,7 @@
   "author": "Nikolay Kasyanov",
   "license": "MIT",
   "dependencies": {
-    "botkit": "~> 0.2.2"
+    "botkit": "~> 0.2.2",
+    "jenkins": "~> 0.17.0"
   }
 }
