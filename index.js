@@ -122,6 +122,16 @@ controller.hears(['call me (.*)', 'my name is (.*)'], 'direct_message,direct_men
     });
 });
 
+controller.hears(['job list'], 'direct_message', function(bot, message) {
+    Jenkins.job.list().then(function(jobs) {
+        let jobNames = jobs.map(j => j.name);
+        bot.reply(message, jobNames.join("\n"));
+    })
+    .catch(function(error) {
+        bot.reply(message, "Couln't fetch job list: " + error);
+    });
+});
+
 controller.hears(['what is my name', 'who am i'], 'direct_message,direct_mention,mention', function(bot, message) {
 
     controller.storage.users.get(message.user, function(err, user) {
