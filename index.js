@@ -99,7 +99,7 @@ var Botkit = require('Botkit');
 var Jenkins = require('jenkins')({
     baseUrl: URL.format(jenkinsURL),
     promisify: true,
-})
+});
 var os = require('os');
 
 var controller = Botkit.slackbot({
