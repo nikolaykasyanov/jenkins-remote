@@ -72,7 +72,7 @@ if (!process.env.token) {
 var Botkit = require('Botkit');
 var Jenkins = require('jenkins')({
     baseUrl: 'http://mobile-jenkins.local/',
-    promosify: true,
+    promisify: true,
 })
 var os = require('os');
 
