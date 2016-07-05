@@ -64,14 +64,40 @@ This bot demonstrates many of the core features of Botkit:
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 
-if (!process.env.token) {
-    console.log('Error: Specify token in environment');
+if (!process.env.SLACK_TOKEN) {
+    console.log('Error: specify SLACK_TOKEN in environment');
     process.exit(1);
 }
 
+let jenkinsUser = process.env.JENKINS_NAME; 
+
+if (!jenkinsUser) {
+    console.log('Error: specify JENKINS_NAME in environment')
+    process.exit(1);
+}
+
+let jenkinsToken = process.env.JENKINS_TOKEN;
+
+if (!jenkinsToken) {
+    console.log('Error: specify JENKINS_TOKEN in environment');
+    process.exit(1);
+}
+
+let jenkinsBaseURL = process.env.JENKINS_URL;
+
+if (!jenkinsBaseURL) {
+    console.log('Error: specify JENKINS_URL in environment');
+    process.exit(1);
+}
+
+let URL = require('url');
+
+let jenkinsURL = URL.parse(jenkinsBaseURL);
+jenkinsURL.auth = jenkinsUser + ':' + jenkinsToken;
+
 var Botkit = require('Botkit');
 var Jenkins = require('jenkins')({
-    baseUrl: 'http://mobile-jenkins.local/',
+    baseUrl: URL.format(jenkinsURL),
     promisify: true,
 })
 var os = require('os');
@@ -81,7 +107,7 @@ var controller = Botkit.slackbot({
 });
 
 var bot = controller.spawn({
-    token: process.env.token
+    token: process.env.SLACK_TOKEN
 }).startRTM();
 
 
